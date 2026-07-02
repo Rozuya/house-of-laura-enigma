@@ -33,7 +33,7 @@
         </div>
         <input type="text" id="reponse" placeholder="Processus..." autocomplete="off">
         <br>
-        <div id="compteur-erreurs">Tentatives : 0</div>
+        <div id="compteur-erreurs">Tentatives : 0/8</div>
         <button onclick="verifier()">Déchiffrer</button>
         <div id="indice-box"></div>
     </div>
@@ -65,14 +65,14 @@
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
             
-            compteur.innerHTML = "Tentatives : " + tentatives;
+            if (tentatives <= 8) {
+                compteur.innerHTML = "Tentatives : " + tentatives + "/8";
+            }
             
-            // Premier indice après 5 erreurs
             if (tentatives === 5) {
                 indiceBox.innerHTML = "SYSTEME // ANALYSE : L'horloge du sanctuaire attend un signal commun. Cherchez le mot qui unit les flux. <br><span style='color:red;'>ALERTE : Plus que 3 tentatives avant verrouillage système !</span>";
             }
             
-            // Bouton d'urgence après 3 erreurs supplémentaires (total 8)
             if (tentatives === 8 && !urgenceActive) {
                 urgenceActive = true;
                 indiceBox.innerHTML += "<br><br><button class='danger-btn' onclick='aider()'>PROTOCOLE D'URGENCE : FORCER LE DÉCHIFFRAGE</button>";
@@ -80,7 +80,6 @@
         }
     }
 
-    // Fonction de déchiffrement facile
     function aider() {
         document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. Signifie mettre en phase. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
     }
