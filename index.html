@@ -3,27 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>House of Laura | Révélation</title>
+    <title>House of Laura | Accès Archive Tome 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --bg: #0a0a0a; }
-        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        
-        .wrapper { text-align: center; max-width: 600px; padding: 40px; border: 1px solid #222; background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%); box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        h1 { font-family: 'Cinzel', serif; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; }
-        
-        .enigme-box { margin: 30px 0; font-style: italic; border-left: 2px solid var(--gold); padding: 10px 20px; text-align: left; }
-        
-        input { background: transparent; border: 1px solid #444; color: white; padding: 12px; width: 70%; text-align: center; transition: 0.3s; font-size: 16px; }
+        body { background: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .wrapper { text-align: center; max-width: 700px; padding: 40px; border: 1px solid #333; background: radial-gradient(circle, #1a1a1a 0%, #0a0a0a 100%); box-shadow: 0 0 40px rgba(0,0,0,0.8); }
+        h1 { font-family: 'Cinzel', serif; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 30px; }
+        .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--gold); padding: 15px 25px; text-align: left; background: rgba(255,255,255,0.03); }
+        input { background: transparent; border: 1px solid #444; color: white; padding: 15px; width: 60%; text-align: center; transition: 0.3s; font-size: 18px; margin-top: 10px; }
         input:focus { border-color: var(--gold); outline: none; }
-        
-        button { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 25px; margin-top: 20px; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-family: 'Cinzel', serif; }
+        button { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 30px; margin-top: 20px; cursor: pointer; text-transform: uppercase; transition: 0.3s; font-family: 'Cinzel', serif; font-size: 16px; }
         button:hover { background: var(--gold); color: black; }
-        
-        #secret-area { margin-top: 20px; }
+        #secret-area { margin-top: 30px; }
         .hidden { display: none; }
-        
-        .cover-img { max-width: 100%; border: 2px solid var(--gold); margin-top: 20px; box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); }
+        .cover-img { max-width: 100%; border: 2px solid var(--gold); margin-top: 20px; box-shadow: 0 0 30px rgba(197, 160, 89, 0.4); }
+        .indice { margin-top: 15px; color: var(--gold); font-size: 0.9em; font-family: 'Montserrat', sans-serif; }
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
     </style>
@@ -32,36 +27,44 @@
 
 <div class="wrapper" id="app">
     <div id="enigme-section">
-        <h1>Accès Restreint</h1>
+        <h1>Protocole de Sécurité</h1>
         <div class="enigme-box">
-            <p>"Je suis le seul témoin qui ne parle jamais, présent dans chaque pièce mais invisible à l'œil nu. Je suis la somme de ce que Laura a perdu et le reflet de ce qu'elle refuse de devenir. Pour obtenir la clé, tu ne dois pas chercher ce qui est écrit, mais ce qui manque dans l'ombre du récit. Quel est le nom du vide qui lie le premier au dernier mot ?"</p>
+            <p>"Dans le Tome 1, le pacte fut scellé dans le sang et l'inconscience. Dans le Tome 2, Laura a franchi le seuil d'une terre que personne ne visite et dont nul ne revient, là où le système a révélé son nom. Elle y a trouvé la vérité sur son existence, au prix d'une perte totale, puis d'un miracle. <strong>Quel est le nom de cette zone oubliée du temps où tout a basculé ?</strong>"</p>
         </div>
-        <input type="text" id="reponse" placeholder="Code d'accès">
+        <input type="text" id="reponse" placeholder="Nom du lieu">
         <br>
         <button onclick="verifier()">Déchiffrer</button>
+        <div id="indice-box" class="indice"></div>
     </div>
 
     <div id="secret-area" class="hidden">
         <h1 style="color: #4CAF50;">Accès Autorisé</h1>
-        <p>Le mystère est levé. Voici la couverture du Tome 3 :</p>
-        <img src="cover-tome-3.jpg" alt="Couverture Tome 3" class="cover-img">
+        <p>La vérité vous appartient désormais.</p>
+        <img src="cover tome 3 hol.png" alt="Couverture Tome 3" class="cover-img">
     </div>
 </div>
 
 <script>
+    let tentatives = 0;
+
     function verifier() {
         const input = document.getElementById('reponse').value.toLowerCase().trim();
         const enigmeSection = document.getElementById('enigme-section');
         const secretArea = document.getElementById('secret-area');
         const app = document.getElementById('app');
+        const indiceBox = document.getElementById('indice-box');
 
-        // Réponse configurée : silence
-        if (input === "silence") {
+        if (input === "arcania") {
             enigmeSection.style.display = "none";
             secretArea.classList.remove('hidden');
         } else {
+            tentatives++;
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
+
+            if (tentatives >= 5) {
+                indiceBox.innerHTML = "Indice : Ce nom commence par 'A' et finit par 'A'...";
+            }
         }
     }
 </script>
