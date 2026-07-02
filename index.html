@@ -47,7 +47,7 @@
         .cover-img { max-width: 100%; border: 2px solid var(--neon-purple); margin-top: 20px; box-shadow: 0 0 20px var(--neon-purple); }
         
         #compteur-erreurs { margin-top: 15px; font-size: 0.7em; color: var(--neon-purple); text-transform: uppercase; }
-        #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; }
+        #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; }
         .hidden { display: none; }
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
@@ -92,8 +92,15 @@
             tentatives++;
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
-            if (tentatives <= 5) compteur.innerHTML = "Tentatives : " + tentatives + "/5";
-            if (tentatives >= 5) indiceBox.innerHTML = "SYSTEME // INDICE : Ce verbe est lié au septième Fragment (Équilibre).";
+            
+            if (tentatives <= 5) {
+                compteur.innerHTML = "Tentatives : " + tentatives + "/5";
+            }
+            
+            // Indice cryptique débloqué après 5 échecs
+            if (tentatives >= 5) {
+                indiceBox.innerHTML = "SYSTEME // ANALYSE : Le chaos demande une compensation. Le poids de l'âme de l'un doit être mis en face de la vie de l'autre pour stabiliser la balance. Quel est ce verbe ?";
+            }
         }
     }
 </script>
