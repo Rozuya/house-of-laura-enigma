@@ -6,51 +6,21 @@
     <title>House of Laura | Archive Systémique</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* DA inspirée du manga : Noir Profond et Violet Néon */
-        :root { 
-            --neon-purple: #8a2be2; 
-            --bg-dark: #050505; 
-            --text-color: #e0e0e0;
-            --border-glow: rgba(138, 43, 226, 0.5);
-        }
-        
-        body { 
-            background-color: var(--bg-dark); 
-            background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%);
-            color: var(--text-color); 
-            font-family: 'Montserrat', sans-serif; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            margin: 0; 
-        }
-
-        .wrapper { 
-            text-align: center; 
-            max-width: 650px; 
-            padding: 40px; 
-            border: 1px solid var(--neon-purple); 
-            background: rgba(10, 10, 15, 0.9); 
-            box-shadow: 0 0 20px var(--border-glow);
-        }
-
+        :root { --neon-purple: #8a2be2; --bg-dark: #050505; --text-color: #e0e0e0; --border-glow: rgba(138, 43, 226, 0.5); }
+        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%); color: var(--text-color); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); }
         h1 { font-family: 'Cinzel', serif; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px var(--neon-purple); }
-
         .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--neon-purple); padding: 15px 25px; text-align: left; background: rgba(138, 43, 226, 0.05); }
-
         input { background: #000; border: 1px solid var(--neon-purple); color: #fff; padding: 15px; width: 60%; text-align: center; font-size: 18px; outline: none; }
-        
         button { background: transparent; border: 1px solid var(--neon-purple); color: var(--neon-purple); padding: 12px 30px; margin-top: 20px; cursor: pointer; text-transform: uppercase; font-family: 'Cinzel', serif; transition: 0.3s; }
         button:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
-
         .cover-img { max-width: 100%; border: 2px solid var(--neon-purple); margin-top: 20px; box-shadow: 0 0 20px var(--neon-purple); }
-        
-        #compteur-erreurs { margin-top: 15px; font-size: 0.7em; color: var(--neon-purple); text-transform: uppercase; }
+        #compteur-erreurs { margin-top: 15px; font-size: 0.8em; color: var(--neon-purple); text-transform: uppercase; font-weight: bold; }
         #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; }
         .hidden { display: none; }
         .shake { animation: shake 0.4s; }
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
+        .danger-btn { background: #8a2be2 !important; color: white !important; border: 1px solid white !important; padding: 15px !important; margin-top: 20px !important; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -59,11 +29,11 @@
     <div id="enigme-section">
         <h1>Accès Système Restreint</h1>
         <div class="enigme-box">
-            <p>"Dans le Tome 1, Laura a scellé son âme dans un pacte de sang. Dans le Tome 2, au cœur du Sanctuaire d'Arcania, elle a découvert que les sept fragments ne sont pas des objets, mais les composantes d'une loi oubliée. Pour ramener Obiwan du néant, Laura a dû accomplir la fonction même de son existence en tant que Gardienne. <strong>Quel verbe définit l'action suprême qu'elle exerce sur les fragments pour maintenir l'ordre ?</strong>"</p>
+            <p>"Les sept fragments d'Arcania sont des données brutes, éparpillées dans le néant. Pour stabiliser la réalité et ramener Obiwan, Laura ne doit pas les contraindre, mais les aligner. <strong>Quel est le processus technique et spirituel par lequel elle unit son flux vital à celui des fragments ?</strong>"</p>
         </div>
-        <input type="text" id="reponse" placeholder="Action..." autocomplete="off">
+        <input type="text" id="reponse" placeholder="Processus..." autocomplete="off">
         <br>
-        <div id="compteur-erreurs">Tentatives : 0/5</div>
+        <div id="compteur-erreurs">Tentatives : 0</div>
         <button onclick="verifier()">Déchiffrer</button>
         <div id="indice-box"></div>
     </div>
@@ -77,6 +47,8 @@
 
 <script>
     let tentatives = 0;
+    let urgenceActive = false;
+    
     function verifier() {
         const input = document.getElementById('reponse').value.toLowerCase().trim();
         const enigmeSection = document.getElementById('enigme-section');
@@ -85,7 +57,7 @@
         const indiceBox = document.getElementById('indice-box');
         const compteur = document.getElementById('compteur-erreurs');
 
-        if (input === "équilibrer") {
+        if (input === "synchronisation") {
             enigmeSection.style.display = "none";
             secretArea.classList.remove('hidden');
         } else {
@@ -93,15 +65,24 @@
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
             
-            if (tentatives <= 5) {
-                compteur.innerHTML = "Tentatives : " + tentatives + "/5";
+            compteur.innerHTML = "Tentatives : " + tentatives;
+            
+            // Premier indice après 5 erreurs
+            if (tentatives === 5) {
+                indiceBox.innerHTML = "SYSTEME // ANALYSE : L'horloge du sanctuaire attend un signal commun. Cherchez le mot qui unit les flux. <br><span style='color:red;'>ALERTE : Plus que 3 tentatives avant verrouillage système !</span>";
             }
             
-            // Indice mystérieux débloqué après 5 échecs
-            if (tentatives >= 5) {
-                indiceBox.innerHTML = "SYSTEME // ANALYSE : Le chaos demande une compensation. Le poids de l'âme de l'un doit être mis en face de la vie de l'autre pour stabiliser la balance.";
+            // Bouton d'urgence après 3 erreurs supplémentaires (total 8)
+            if (tentatives === 8 && !urgenceActive) {
+                urgenceActive = true;
+                indiceBox.innerHTML += "<br><br><button class='danger-btn' onclick='aider()'>PROTOCOLE D'URGENCE : FORCER LE DÉCHIFFRAGE</button>";
             }
         }
+    }
+
+    // Fonction de déchiffrement facile
+    function aider() {
+        document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. Signifie mettre en phase. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
     }
 </script>
 
