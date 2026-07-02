@@ -9,7 +9,7 @@
         :root { --neon-purple: #8a2be2; --bg-dark: #050505; --text-color: #e0e0e0; --border-glow: rgba(138, 43, 226, 0.5); }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%); color: var(--text-color); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         
-        .audio-controls { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 15px; border: 1px solid var(--neon-purple); border-radius: 5px; color: var(--neon-purple); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+        .audio-controls { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 15px; border: 1px solid var(--neon-purple); border-radius: 5px; color: var(--neon-purple); display: flex; flex-direction: column; gap: 10px; z-index: 100; max-width: 250px; }
         
         .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); }
         h1 { font-family: 'Cinzel', serif; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px var(--neon-purple); }
@@ -61,11 +61,18 @@
 <script>
     const audio = document.getElementById('bg-music');
     const playBtn = document.getElementById('play-btn');
+    const nomMusique = "Arcania Protocol_Resonance";
     
     function toggleAudio() {
-        if (audio.paused) { audio.play(); playBtn.innerHTML = "SON : ON"; }
-        else { audio.pause(); playBtn.innerHTML = "SON : OFF"; }
+        if (audio.paused) { 
+            audio.play().catch(e => console.log("Interaction utilisateur requise")); 
+            playBtn.innerHTML = "SON : ON - " + nomMusique;
+        } else { 
+            audio.pause(); 
+            playBtn.innerHTML = "SON : OFF"; 
+        }
     }
+    
     function setVolume(val) { audio.volume = val; }
 
     let tentatives = 0;
