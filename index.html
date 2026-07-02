@@ -8,6 +8,9 @@
     <style>
         :root { --neon-purple: #8a2be2; --bg-dark: #050505; --text-color: #e0e0e0; --border-glow: rgba(138, 43, 226, 0.5); }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%); color: var(--text-color); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        
+        .audio-controls { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 15px; border: 1px solid var(--neon-purple); border-radius: 5px; color: var(--neon-purple); display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+        
         .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); }
         h1 { font-family: 'Cinzel', serif; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px var(--neon-purple); }
         .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--neon-purple); padding: 15px 25px; text-align: left; background: rgba(138, 43, 226, 0.05); }
@@ -24,6 +27,16 @@
     </style>
 </head>
 <body>
+
+<div class="audio-controls">
+    <button onclick="toggleAudio()" id="play-btn">SON : OFF</button>
+    <label for="volume">Volume</label>
+    <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5" oninput="setVolume(this.value)">
+</div>
+
+<audio id="bg-music" loop>
+    <source src="Arcania Protocol_Resonance.mp3" type="audio/mpeg">
+</audio>
 
 <div class="wrapper" id="app">
     <div id="enigme-section">
@@ -46,6 +59,15 @@
 </div>
 
 <script>
+    const audio = document.getElementById('bg-music');
+    const playBtn = document.getElementById('play-btn');
+    
+    function toggleAudio() {
+        if (audio.paused) { audio.play(); playBtn.innerHTML = "SON : ON"; }
+        else { audio.pause(); playBtn.innerHTML = "SON : OFF"; }
+    }
+    function setVolume(val) { audio.volume = val; }
+
     let tentatives = 0;
     let urgenceActive = false;
     
@@ -65,9 +87,7 @@
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
             
-            if (tentatives <= 8) {
-                compteur.innerHTML = "Tentatives : " + tentatives + "/8";
-            }
+            if (tentatives <= 8) compteur.innerHTML = "Tentatives : " + tentatives + "/8";
             
             if (tentatives === 5) {
                 indiceBox.innerHTML = "SYSTEME // ANALYSE : L'horloge du sanctuaire attend un signal commun. Cherchez le mot qui unit les flux. <br><span style='color:red;'>ALERTE : Plus que 3 tentatives avant verrouillage système !</span>";
