@@ -14,7 +14,6 @@
         .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--neon-purple); padding: 15px 25px; text-align: left; background: rgba(138, 43, 226, 0.05); }
         input[type=text] { background: #000; border: 1px solid var(--neon-purple); color: #fff; padding: 15px; width: 60%; text-align: center; font-size: 18px; outline: none; }
         
-        /* Bouton de base */
         button { background: transparent; border: 1px solid var(--neon-purple); color: var(--neon-purple); padding: 12px 30px; margin-top: 20px; cursor: pointer; text-transform: uppercase; font-family: 'Cinzel', serif; transition: 0.3s; }
         button:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
         
@@ -22,92 +21,57 @@
         #compteur-erreurs { margin-top: 15px; font-size: 0.8em; color: var(--neon-purple); text-transform: uppercase; font-weight: bold; }
         #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; transition: opacity 0.5s; }
         
-        /* --- LECTEUR AUDIO PRO & AESTHETIC --- */
-        #audio-panel { 
-            position: fixed; top: 25px; right: 25px; width: 260px; /* Légèrement élargi pour le % */
-            padding: 15px 20px; border: 1px solid rgba(138, 43, 226, 0.3); 
-            background: rgba(5, 5, 8, 0.7); backdrop-filter: blur(8px); 
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 10px var(--border-glow); 
-            z-index: 1000; border-radius: 4px; display: flex; flex-direction: column; gap: 12px;
-        }
-        
-        #track-info { 
-            color: var(--neon-purple); font-size: 0.65em; font-family: monospace; 
-            letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 8px;
-        }
-        
+        /* Audio Panel */
+        #audio-panel { position: fixed; top: 25px; right: 25px; width: 260px; padding: 15px 20px; border: 1px solid rgba(138, 43, 226, 0.3); background: rgba(5, 5, 8, 0.7); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 10px var(--border-glow); z-index: 1000; border-radius: 4px; display: flex; flex-direction: column; gap: 12px; }
+        #track-info { color: var(--neon-purple); font-size: 0.65em; font-family: monospace; letter-spacing: 2px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
         .status-dot { width: 6px; height: 6px; background-color: rgba(138, 43, 226, 0.3); border-radius: 50%; }
         .playing-pulse .status-dot { background-color: var(--neon-purple); box-shadow: 0 0 8px var(--neon-purple); animation: blink 1.5s infinite; }
+        .audio-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
         
-        .audio-controls { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-        
-        /* Bouton Play/Pause Minimaliste */
-        #music-btn { 
-            margin: 0; padding: 8px; min-width: 35px; height: 35px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            border: 1px solid var(--neon-purple); background: transparent; 
-        }
-        #music-btn svg { width: 14px; height: 14px; fill: var(--neon-purple); transition: 0.3s; }
-        #music-btn:hover { background: rgba(138, 43, 226, 0.2); box-shadow: 0 0 10px var(--border-glow); }
-        #music-btn.active-btn { background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); }
+        #music-btn, #aura-btn { margin: 0; padding: 8px; min-width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--neon-purple); background: transparent; cursor: pointer; color: var(--neon-purple); }
+        #music-btn svg { width: 14px; height: 14px; fill: var(--neon-purple); }
+        #music-btn.active-btn { background: var(--neon-purple); color: white; }
         #music-btn.active-btn svg { fill: #fff; }
+        #aura-btn:hover, #music-btn:hover { background: var(--neon-purple); color: #fff; }
 
-        /* Slider Customisé Façon Terminal avec Pourcentage */
         .slider-wrapper { flex-grow: 1; display: flex; align-items: center; gap: 8px; }
         .vol-label { font-size: 0.6em; font-family: monospace; color: var(--text-color); opacity: 0.7; }
-        #vol-pct { width: 25px; text-align: right; } /* Fixe la largeur pour éviter que ça bouge */
-        
+        #vol-pct { width: 25px; text-align: right; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; cursor: pointer; }
-        input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: rgba(138, 43, 226, 0.3); border-radius: 2px; }
-        input[type=range]::-webkit-slider-thumb { 
-            -webkit-appearance: none; height: 12px; width: 4px; background: var(--neon-purple); 
-            margin-top: -5px; box-shadow: 0 0 5px var(--neon-purple); border-radius: 1px; transition: 0.2s;
-        }
-        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.5); background: #fff; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: rgba(138, 43, 226, 0.3); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 12px; width: 4px; background: var(--neon-purple); margin-top: -5px; box-shadow: 0 0 5px var(--neon-purple); }
 
         .hidden { display: none !important; }
         .shake { animation: shake 0.4s; }
-        
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
         @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-        
         .danger-btn { background: #8a2be2 !important; color: white !important; border: 1px solid white !important; padding: 15px !important; margin-top: 20px !important; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            #audio-panel { top: 15px; right: 15px; width: 210px; padding: 12px; }
-            .wrapper { margin-top: 100px; }
-        }
     </style>
 </head>
 <body>
 
-<!-- Interface Audio Pro (Glassmorphism & SVG) -->
 <div id="audio-panel">
     <audio id="bg-music" loop>
         <source src="arcania protocol_resonance.mp3" type="audio/mpeg">
     </audio>
-    
     <div id="track-info">
         <div class="status-dot"></div>
         SYS.AUDIO // RESONANCE
     </div>
-    
     <div class="audio-controls">
-        <button id="music-btn" onclick="toggleMusic()" title="Activer / Couper la résonance">
+        <button id="music-btn" onclick="toggleMusic()">
             <svg id="icon-play" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             <svg id="icon-pause" class="hidden" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
         </button>
-        
+        <button id="aura-btn" onclick="lancerNarration()">AURA</button>
         <div class="slider-wrapper">
             <span class="vol-label">VOL</span>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3" oninput="changeVolume(this.value)" title="Ajuster le flux">
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3" oninput="changeVolume(this.value)">
             <span id="vol-pct" class="vol-label">30%</span>
         </div>
     </div>
 </div>
 
-<!-- Interface Principale -->
 <div class="wrapper" id="app">
     <div id="enigme-section">
         <h1>Accès Système Restreint</h1>
@@ -129,10 +93,6 @@
 </div>
 
 <script>
-    // --- GESTION DE L'ÉNIGME ---
-    let tentatives = 0;
-    let urgenceActive = false;
-    
     function verifier() {
         const input = document.getElementById('reponse').value.toLowerCase().trim();
         const enigmeSection = document.getElementById('enigme-section');
@@ -148,25 +108,25 @@
             tentatives++;
             app.classList.add('shake');
             setTimeout(() => app.classList.remove('shake'), 400);
-            
             if (tentatives <= 8) compteur.innerHTML = "Tentatives : " + tentatives + "/8";
-            
-            if (tentatives === 5) {
-                indiceBox.innerHTML = "SYSTEME // ANALYSE : L'horloge du sanctuaire attend un signal commun. Cherchez le mot qui unit les flux. <br><span style='color:red;'>ALERTE : Plus que 3 tentatives avant verrouillage système !</span>";
-            }
-            
-            if (tentatives === 8 && !urgenceActive) {
-                urgenceActive = true;
-                indiceBox.innerHTML += "<br><br><button class='danger-btn' onclick='aider()'>PROTOCOLE D'URGENCE : FORCER LE DÉCHIFFRAGE</button>";
-            }
+            if (tentatives === 5) indiceBox.innerHTML = "SYSTEME // ANALYSE : Cherchez le mot qui unit les flux.";
+            if (tentatives === 8) indiceBox.innerHTML += "<br><button class='danger-btn' onclick='aider()'>PROTOCOLE D'URGENCE</button>";
         }
     }
 
     function aider() {
-        document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. Signifie mettre en phase. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
+        document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
     }
 
-    // --- GESTION DE LA MUSIQUE ---
+    function lancerNarration() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance("Ici AURA. Les fragments d'Arcania sont instables, Laura. Le flux vital demande une synchronisation immédiate. Ne laisse pas le néant absorber nos données. Le système attend ton signal.");
+            msg.lang = 'fr-FR'; msg.rate = 0.85; msg.pitch = 0.7;
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-btn');
     const iconPlay = document.getElementById('icon-play');
@@ -174,16 +134,13 @@
     const trackInfo = document.getElementById('track-info');
     const volPct = document.getElementById('vol-pct');
 
-    // Volume par défaut à 30%
-    music.volume = 0.3;
-
     function toggleMusic() {
         if (music.paused) {
             music.play();
             iconPlay.classList.add('hidden');
             iconPause.classList.remove('hidden');
             musicBtn.classList.add('active-btn');
-            trackInfo.classList.add('playing-pulse'); 
+            trackInfo.classList.add('playing-pulse');
         } else {
             music.pause();
             iconPause.classList.add('hidden');
@@ -195,10 +152,8 @@
 
     function changeVolume(val) {
         music.volume = val;
-        // Met à jour l'affichage du pourcentage (arrondi à l'entier)
         volPct.innerText = Math.round(val * 100) + "%";
     }
 </script>
-
 </body>
 </html>
