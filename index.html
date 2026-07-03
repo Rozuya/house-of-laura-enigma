@@ -3,178 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACCÈS SYSTÈME RESTREINT | ARCHIVE 03</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <title>House of Laura | Archive Systémique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050505;
-            --neon: #8a2be2;
-            --text: #e0e0e0;
-            --red: #ff4444;
-            --orange: #ffaa00;
-        }
-
-        * { box-sizing: border-box; cursor: crosshair; }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Effets visuels */
-        #crt-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-
-        /* Terminal Ouverture */
-        #boot-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 50px;
-            font-family: monospace;
-            color: var(--neon);
-        }
-
-        /* Interface Principale */
-        #main-ui {
-            text-align: center;
-            z-index: 10;
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 0; color: var(--neon); text-shadow: 0 0 10px var(--neon); }
-        .sub-title { font-size: 0.8rem; letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase; }
-
-        .health-container { width: 300px; height: 10px; border: 1px solid var(--neon); margin: 0 auto 20px; }
-        #health-bar { height: 100%; width: 100%; background: var(--neon); transition: 0.5s; }
-
-        .enigme-text { font-size: 1.2rem; margin: 30px 0; line-height: 1.6; border: 1px solid rgba(138,43,226,0.3); padding: 20px; background: rgba(0,0,0,0.6); }
-
-        input {
-            width: 100%; padding: 15px; background: #000; border: 1px solid var(--neon);
-            color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 20px;
-        }
-
-        button {
-            padding: 15px 40px; background: transparent; border: 1px solid var(--neon);
-            color: var(--neon); font-family: 'Cinzel', serif; font-size: 1.2rem; cursor: pointer;
-            transition: all 0.3s;
-        }
-        button:hover { background: var(--neon); color: #fff; box-shadow: 0 0 20px var(--neon); }
-
-        #glitch-msg { position: fixed; top: 10%; color: var(--red); font-weight: bold; opacity: 0; pointer-events: none; }
+        :root { --neon-purple: #8a2be2; --bg-dark: #050505; --text-color: #e0e0e0; --border-glow: rgba(138, 43, 226, 0.5); }
+        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%); color: var(--text-color); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         
-        .hidden { display: none !important; }
+        .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); }
+        h1 { font-family: 'Cinzel', serif; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px var(--neon-purple); }
+        .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--neon-purple); padding: 15px 25px; text-align: left; background: rgba(138, 43, 226, 0.05); }
+        input[type=text] { background: #000; border: 1px solid var(--neon-purple); color: #fff; padding: 15px; width: 60%; text-align: center; font-size: 18px; outline: none; }
+        button { background: transparent; border: 1px solid var(--neon-purple); color: var(--neon-purple); padding: 12px 30px; margin-top: 20px; cursor: pointer; text-transform: uppercase; font-family: 'Cinzel', serif; transition: 0.3s; }
+        button:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
+        .cover-img { max-width: 100%; border: 2px solid var(--neon-purple); margin-top: 20px; box-shadow: 0 0 20px var(--neon-purple); }
+        #compteur-erreurs { margin-top: 15px; font-size: 0.8em; color: var(--neon-purple); text-transform: uppercase; font-weight: bold; }
+        #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; }
+        .hidden { display: none; }
+        .shake { animation: shake 0.4s; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
+        .danger-btn { background: #8a2be2 !important; color: white !important; border: 1px solid white !important; padding: 15px !important; margin-top: 20px !important; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="crt-overlay"></div>
-    <div id="particles"></div>
-    
-    <div id="boot-screen">
-        <div id="boot-text"></div>
-    </div>
-
-    <div id="main-ui">
-        <h1>ACCÈS SYSTÈME RESTREINT</h1>
-        <div class="sub-title">Archive Systémique 03</div>
-        
-        <div>Intégrité système: <span id="hp-val">100%</span></div>
-        <div class="health-container"><div id="health-bar"></div></div>
-
-        <div class="enigme-text">
-            "Les sept fragments d'Arcania sont des données brutes, éparpillées dans le néant. Pour stabiliser la réalité et ramener Obiwan, Laura ne doit pas les contraindre, mais les aligner. Quel est le processus technique et spirituel par lequel elle unit son flux vital à celui des fragments ?"
+<div class="wrapper" id="app">
+    <div id="enigme-section">
+        <h1>Accès Système Restreint</h1>
+        <div class="enigme-box">
+            <p>"Les sept fragments d'Arcania sont des données brutes, éparpillées dans le néant. Pour stabiliser la réalité et ramener Obiwan, Laura ne doit pas les contraindre, mais les aligner. <strong>Quel est le processus technique et spirituel par lequel elle unit son flux vital à celui des fragments ?</strong>"</p>
         </div>
-
-        <input type="text" id="answer" placeholder="ENTRER PROCESSUS" autocomplete="off">
+        <input type="text" id="reponse" placeholder="Processus..." autocomplete="off">
         <br>
-        <button id="submit-btn" onclick="checkAnswer()">DÉCHIFFRER</button>
-        <button id="audio-btn" style="margin-left:10px" onclick="initAudio()">🔊</button>
+        <div id="compteur-erreurs">Tentatives : 0/8</div>
+        <button onclick="verifier()">Déchiffrer</button>
+        <div id="indice-box"></div>
     </div>
 
-    <script>
-        const bootText = document.getElementById('boot-text');
-        const lines = ["Connexion au Sanctuaire...", "████░░░░░░", "Vérification des fragments...", "████████░░", "Sujet détecté: HOUSE OF LAURA", "Connexion autorisée."];
-        
-        let i = 0;
-        function typeBoot() {
-            if(i < lines.length) {
-                bootText.innerHTML += lines[i] + "<br>";
-                i++;
-                setTimeout(typeBoot, 800);
-            } else {
-                setTimeout(() => document.getElementById('boot-screen').style.display = 'none', 1000);
+    <div id="secret-area" class="hidden">
+        <h1 style="color: #fff;">Système Débloqué</h1>
+        <p>Transfert des données du Tome 3 en cours...</p>
+        <img src="cover tome 3 hol.png" alt="Couverture Tome 3" class="cover-img">
+    </div>
+</div>
+
+<script>
+    let tentatives = 0;
+    let urgenceActive = false;
+    
+    function verifier() {
+        const input = document.getElementById('reponse').value.toLowerCase().trim();
+        const enigmeSection = document.getElementById('enigme-section');
+        const secretArea = document.getElementById('secret-area');
+        const app = document.getElementById('app');
+        const indiceBox = document.getElementById('indice-box');
+        const compteur = document.getElementById('compteur-erreurs');
+
+        if (input === "synchronisation") {
+            enigmeSection.style.display = "none";
+            secretArea.classList.remove('hidden');
+        } else {
+            tentatives++;
+            app.classList.add('shake');
+            setTimeout(() => app.classList.remove('shake'), 400);
+            
+            if (tentatives <= 8) compteur.innerHTML = "Tentatives : " + tentatives + "/8";
+            
+            if (tentatives === 5) {
+                indiceBox.innerHTML = "SYSTEME // ANALYSE : L'horloge du sanctuaire attend un signal commun. Cherchez le mot qui unit les flux. <br><span style='color:red;'>ALERTE : Plus que 3 tentatives avant verrouillage système !</span>";
+            }
+            
+            if (tentatives === 8 && !urgenceActive) {
+                urgenceActive = true;
+                indiceBox.innerHTML += "<br><br><button class='danger-btn' onclick='aider()'>PROTOCOLE D'URGENCE : FORCER LE DÉCHIFFRAGE</button>";
             }
         }
-        typeBoot();
+    }
 
-        let hp = 100;
-        let attempt = 1;
+    function aider() {
+        document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. Signifie mettre en phase. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
+    }
+</script>
 
-        function checkAnswer() {
-            const val = document.getElementById('answer').value.toLowerCase();
-            if(val === 'synchronisation') {
-                document.body.innerHTML = "<h1 style='margin-top:20vh'>ACCÈS AUTORISÉ</h1><p>Sujet: HOUSE OF LAURA | Niveau: OMEGA</p><p>Transfert du Tome III...</p><img src='cover tome 3 hol.png' style='width:300px; margin-top:20px'>";
-            } else {
-                hp -= 12.5;
-                attempt++;
-                document.getElementById('hp-val').innerText = hp + "%";
-                document.getElementById('health-bar').style.width = hp + "%";
-                
-                // Effet Glitch
-                document.body.style.border = "5px solid red";
-                setTimeout(() => document.body.style.border = "none", 100);
-                
-                if(attempt >= 8) {
-                    const btn = document.createElement('button');
-                    btn.className = 'danger-btn';
-                    btn.innerText = "FORCER LE DÉCHIFFRAGE";
-                    btn.onclick = () => alert("Mot en 15 lettres. S _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-                    document.getElementById('main-ui').appendChild(btn);
-                }
-            }
-        }
-
-        // Ambiance Sonore
-        function initAudio() {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(50, ctx.currentTime);
-            gain.gain.value = 0.05;
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-        }
-
-        // Easter eggs
-        console.log("Tu cherches au mauvais endroit.");
-        console.log("Les fragments t'observent.");
-        console.warn("Synchronisation impossible.");
-    </script>
 </body>
 </html>
