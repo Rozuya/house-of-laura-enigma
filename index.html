@@ -9,7 +9,7 @@
         :root { --neon-purple: #8a2be2; --bg-dark: #050505; --text-color: #e0e0e0; --border-glow: rgba(138, 43, 226, 0.5); }
         body { background-color: var(--bg-dark); background-image: radial-gradient(circle at center, #1a0a2a 0%, var(--bg-dark) 80%); color: var(--text-color); font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
         
-        .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); }
+        .wrapper { text-align: center; max-width: 650px; padding: 40px; border: 1px solid var(--neon-purple); background: rgba(10, 10, 15, 0.9); box-shadow: 0 0 20px var(--border-glow); position: relative; }
         h1 { font-family: 'Cinzel', serif; color: var(--neon-purple); letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px var(--neon-purple); }
         .enigme-box { margin: 30px 0; font-style: italic; border-left: 3px solid var(--neon-purple); padding: 15px 25px; text-align: left; background: rgba(138, 43, 226, 0.05); }
         input[type=text] { background: #000; border: 1px solid var(--neon-purple); color: #fff; padding: 15px; width: 60%; text-align: center; font-size: 18px; outline: none; }
@@ -17,10 +17,20 @@
         button:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
         .cover-img { max-width: 100%; border: 2px solid var(--neon-purple); margin-top: 20px; box-shadow: 0 0 20px var(--neon-purple); }
         #compteur-erreurs { margin-top: 15px; font-size: 0.8em; color: var(--neon-purple); text-transform: uppercase; font-weight: bold; }
-        #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; }
-        .hidden { display: none; }
+        #indice-box { margin-top: 20px; padding: 10px; border: 1px dashed var(--neon-purple); color: #fff; font-weight: bold; font-size: 0.9em; transition: opacity 0.5s; }
+        
+        /* Audio Panel Styles */
+        #audio-panel { margin-top: 30px; padding: 15px; border: 1px solid rgba(138, 43, 226, 0.3); background: rgba(0, 0, 0, 0.6); }
+        #track-info { color: var(--neon-purple); margin: 15px 0 10px 0; font-size: 0.85em; font-family: monospace; letter-spacing: 1px; animation: pulse 2s infinite; }
+        .volume-control { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 10px; font-size: 0.8em; color: var(--text-color); }
+        input[type=range] { accent-color: var(--neon-purple); cursor: pointer; width: 150px; }
+
+        .hidden { display: none !important; }
         .shake { animation: shake 0.4s; }
+        
         @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; text-shadow: 0 0 5px var(--neon-purple); } 100% { opacity: 0.6; } }
+        
         .danger-btn { background: #8a2be2 !important; color: white !important; border: 1px solid white !important; padding: 15px !important; margin-top: 20px !important; cursor: pointer; }
     </style>
 </head>
@@ -44,9 +54,27 @@
         <p>Transfert des données du Tome 3 en cours...</p>
         <img src="cover tome 3 hol.png" alt="Couverture Tome 3" class="cover-img">
     </div>
+
+    <div id="audio-panel">
+        <audio id="bg-music" loop>
+            <source src="arcania protocol_resonance.mp3" type="audio/mpeg">
+        </audio>
+        
+        <button id="music-btn" onclick="toggleMusic()">🔊 Activer Résonance</button>
+        
+        <div id="track-info" class="hidden">
+            [ EN LECTURE : Arcania Protocol_Resonance.mp3 ]
+        </div>
+        
+        <div class="volume-control">
+            <label for="volume-slider">FLUX AUDIO</label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3" oninput="changeVolume(this.value)">
+        </div>
+    </div>
 </div>
 
 <script>
+    // --- GESTION DE L'ÉNIGME ---
     let tentatives = 0;
     let urgenceActive = false;
     
@@ -81,6 +109,34 @@
 
     function aider() {
         document.getElementById('indice-box').innerHTML = "SYSTEME // CORRUPTION : Mot en 15 lettres. Signifie mettre en phase. (S _ _ _ _ _ _ _ _ _ _ _ _ _ _)";
+    }
+
+    // --- GESTION DE LA MUSIQUE ---
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    const trackInfo = document.getElementById('track-info');
+
+    // Volume par défaut à 30%
+    music.volume = 0.3;
+
+    function toggleMusic() {
+        if (music.paused) {
+            music.play();
+            musicBtn.innerText = "⏸️ Couper Résonance";
+            musicBtn.style.background = "var(--neon-purple)";
+            musicBtn.style.color = "#fff";
+            trackInfo.classList.remove('hidden');
+        } else {
+            music.pause();
+            musicBtn.innerText = "🔊 Activer Résonance";
+            musicBtn.style.background = "transparent";
+            musicBtn.style.color = "var(--neon-purple)";
+            trackInfo.classList.add('hidden');
+        }
+    }
+
+    function changeVolume(val) {
+        music.volume = val;
     }
 </script>
 
